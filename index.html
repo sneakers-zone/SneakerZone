@@ -82,7 +82,15 @@
   .brand-pill{padding:.5rem 1rem;border:1px solid #e5e7eb;border-radius:9999px;font-size:.95rem;cursor:pointer;background:#eef2f7}
   .brand-pill.active{background:#000;color:#fff;border-color:#000}
   .brand-status{font-size:.9rem;color:#6b7280;text-align:right;margin:.25rem 0 .75rem}
-  </style>
+  
+  /* Ocultar cualquier barra/lista de marcas dentro de Nuevos lanzamientos */
+  #nuevos-lanzamientos-page .brand-bar,
+  #nuevos-lanzamientos-page .brand-list,
+  #nuevos-lanzamientos-page .brand-grid,
+  #nuevos-lanzamientos-page .brands {
+    display: none !important;
+  }
+</style>
 <!-- Injected CSS: top bars + filter panel -->
 <style>
    .section-toolbar{display:flex;align-items:center;gap:1rem;flex-wrap:wrap;margin:1rem 0}
@@ -338,44 +346,352 @@
 </div>
 </section>
 <!-- Featured Products -->
+<!-- Featured Products -->
 <section class="py-20 bg-white" id="productos">
-<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-<div class="text-center mb-16">
-<h2 class="text-4xl font-medium text-black mb-4" id="products-title">
-       Productos Destacados
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-16">
+      <h2 class="text-4xl font-medium text-black mb-4" id="products-title">
+        Productos Destacados
       </h2>
-<p class="text-gray-600 font-light" id="products-subtitle">
-       Los favoritos de esta temporada
+      <p class="text-gray-600 font-light" id="products-subtitle">
+        Los favoritos de esta temporada
       </p>
-</div>
-<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-<!-- Product 1 -->
-<!-- Product 2 -->
-<!-- Product 3 -->
-<!-- Product 4 -->
-<!-- Product 5 -->
-<!-- Product 6 -->
-<!-- Product 7 -->
-<!-- Product 8 -->
-<!-- Product 9 -->
-<!-- Product 10 -->
-<!-- Product 11 -->
-<!-- Product 12 -->
-<!-- Product 13 -->
-<!-- Product 14 -->
-<!-- Product 15 -->
-<!-- Product 16 -->
-<!-- Product 17 -->
-<!-- Product 18 -->
-<!-- Product 19 -->
-<!-- Product 20 -->
-<!-- Product 1 -->
-<!-- Product 1.1 -->
-<!-- Product 2 -->
-<!-- Product 3 -->
-<!-- Product 4 - Reebok -->
-</div>
-</div>
+    </div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+      <div class="product-card nike-hover group cursor-pointer" data-brand="nike" data-gender="hombre">
+                <div class="relative overflow-hidden bg-gray-50 rounded-lg mb-4">
+                  <div class="product-image h-72 sm:h-80 flex items-center justify-center p-4">
+                    <img alt="Air Force 1 Blanco Total" class="w-full h-full object-cover rounded-lg" onerror="this.src=''; this.alt='Imagen no disponible'; this.style.display='none';" src="assets/Img/Nike/Nike_Unisex_AirForce1_BlancoTotal_650_22-22.5-23.5-24.5-26.5-27-27.5-28-28.5-29-29.5.jpg"/>
+                  </div>
+                </div>
+                <div class="space-y-2">
+                  <h3 class="font-medium text-black">Air Force 1 Blanco Total</h3>
+                  <p class="text-gray-500 text-sm">Nike - Tenis para Hombre</p>
+                  <p class="font-medium text-black">$650</p>
+                  <!-- Size selector -->
+                  <div class="size-selector mt-4 opacity-0 group-hover:opacity-100 transition-opacity">
+                    <p class="text-sm text-gray-600 mb-2">Talla:</p>
+                    <div class="grid grid-cols-4 gap-2 mb-4">
+                  <button class="size-btn border border-gray-300 hover:border-black py-2 text-sm rounded transition-colors" data-size="22">22</button>
+                  <button class="size-btn border border-gray-300 hover:border-black py-2 text-sm rounded transition-colors" data-size="22.5">22.5</button>
+                  <button class="size-btn border border-gray-300 hover:border-black py-2 text-sm rounded transition-colors" data-size="23.5">23.5</button>
+                  <button class="size-btn border border-gray-300 hover:border-black py-2 text-sm rounded transition-colors" data-size="24.5">24.5</button>
+                  <button class="size-btn border border-gray-300 hover:border-black py-2 text-sm rounded transition-colors" data-size="26.5">26.5</button>
+                  <button class="size-btn border border-gray-300 hover:border-black py-2 text-sm rounded transition-colors" data-size="27">27</button>
+                  <button class="size-btn border border-gray-300 hover:border-black py-2 text-sm rounded transition-colors" data-size="27.5">27.5</button>
+                  <button class="size-btn border border-gray-300 hover:border-black py-2 text-sm rounded transition-colors" data-size="28">28</button>
+                  <button class="size-btn border border-gray-300 hover:border-black py-2 text-sm rounded transition-colors" data-size="28.5">28.5</button>
+                  <button class="size-btn border border-gray-300 hover:border-black py-2 text-sm rounded transition-colors" data-size="29">29</button>
+                  <button class="size-btn border border-gray-300 hover:border-black py-2 text-sm rounded transition-colors" data-size="29.5">29.5</button>
+                    </div>
+                  </div>
+                  <button class="whatsapp-btn w-full nike-button bg-green-600 text-white py-3 mt-2 opacity-0 group-hover:opacity-100 transition-opacity hover:bg-green-700" disabled="">
+                    Comprar por WhatsApp
+                  </button>
+                </div>
+              </div>
+
+      <div class="product-card nike-hover group cursor-pointer" data-brand="nike" data-gender="hombre">
+                <div class="relative overflow-hidden bg-gray-50 rounded-lg mb-4">
+                  <div class="product-image h-72 sm:h-80 flex items-center justify-center p-4">
+                    <img alt="Blazer Mid Blanco Negro" class="w-full h-full object-cover rounded-lg" onerror="this.src=''; this.alt='Imagen no disponible'; this.style.display='none';" src="assets/Img/Nike/Nike_Unisex_BlazerMid_BlancoNegro_650_23-23.5-25-25.5-26-26.5-27-28.5.jpg"/>
+                  </div>
+                </div>
+                <div class="space-y-2">
+                  <h3 class="font-medium text-black">Blazer Mid Blanco Negro</h3>
+                  <p class="text-gray-500 text-sm">Nike - Tenis para Hombre</p>
+                  <p class="font-medium text-black">$650</p>
+                  <!-- Size selector -->
+                  <div class="size-selector mt-4 opacity-0 group-hover:opacity-100 transition-opacity">
+                    <p class="text-sm text-gray-600 mb-2">Talla:</p>
+                    <div class="grid grid-cols-4 gap-2 mb-4">
+                  <button class="size-btn border border-gray-300 hover:border-black py-2 text-sm rounded transition-colors" data-size="23">23</button>
+                  <button class="size-btn border border-gray-300 hover:border-black py-2 text-sm rounded transition-colors" data-size="23.5">23.5</button>
+                  <button class="size-btn border border-gray-300 hover:border-black py-2 text-sm rounded transition-colors" data-size="25">25</button>
+                  <button class="size-btn border border-gray-300 hover:border-black py-2 text-sm rounded transition-colors" data-size="25.5">25.5</button>
+                  <button class="size-btn border border-gray-300 hover:border-black py-2 text-sm rounded transition-colors" data-size="26">26</button>
+                  <button class="size-btn border border-gray-300 hover:border-black py-2 text-sm rounded transition-colors" data-size="26.5">26.5</button>
+                  <button class="size-btn border border-gray-300 hover:border-black py-2 text-sm rounded transition-colors" data-size="27">27</button>
+                  <button class="size-btn border border-gray-300 hover:border-black py-2 text-sm rounded transition-colors" data-size="28.5">28.5</button>
+                    </div>
+                  </div>
+                  <button class="whatsapp-btn w-full nike-button bg-green-600 text-white py-3 mt-2 opacity-0 group-hover:opacity-100 transition-opacity hover:bg-green-700" disabled="">
+                    Comprar por WhatsApp
+                  </button>
+                </div>
+              </div>
+
+      <div class="product-card nike-hover group cursor-pointer" data-brand="puma" data-gender="hombre">
+                <div class="relative overflow-hidden bg-gray-50 rounded-lg mb-4">
+                  <div class="product-image h-72 sm:h-80 flex items-center justify-center p-4">
+                    <img alt="Rebound V6 Blanco Azul Denim" class="w-full h-full object-cover rounded-lg" onerror="this.src=''; this.alt='Imagen no disponible'; this.style.display='none';" src="assets/Img/Puma/Puma_Unisex_ReboundV6_BlancoAzulDenim_620_26.5-28-28.5.jpg"/>
+                  </div>
+                </div>
+                <div class="space-y-2">
+                  <h3 class="font-medium text-black">Rebound V6 Blanco Azul Denim</h3>
+                  <p class="text-gray-500 text-sm">Puma - Tenis para Hombre</p>
+                  <p class="font-medium text-black">$620</p>
+                  <!-- Size selector -->
+                  <div class="size-selector mt-4 opacity-0 group-hover:opacity-100 transition-opacity">
+                    <p class="text-sm text-gray-600 mb-2">Talla:</p>
+                    <div class="grid grid-cols-4 gap-2 mb-4">
+                  <button class="size-btn border border-gray-300 hover:border-black py-2 text-sm rounded transition-colors" data-size="26.5">26.5</button>
+                  <button class="size-btn border border-gray-300 hover:border-black py-2 text-sm rounded transition-colors" data-size="28">28</button>
+                  <button class="size-btn border border-gray-300 hover:border-black py-2 text-sm rounded transition-colors" data-size="28.5">28.5</button>
+                    </div>
+                  </div>
+                  <button class="whatsapp-btn w-full nike-button bg-green-600 text-white py-3 mt-2 opacity-0 group-hover:opacity-100 transition-opacity hover:bg-green-700" disabled="">
+                    Comprar por WhatsApp
+                  </button>
+                </div>
+              </div>
+
+      <div class="product-card nike-hover group cursor-pointer" data-brand="guess" data-gender="mujer">
+      <div class="relative overflow-hidden bg-gray-50 rounded-lg mb-4">
+      <div class="product-image h-72 sm:h-80 flex items-center justify-center p-4">
+      <img alt="Tenis Blancos" class="w-full h-full object-cover rounded-lg" onerror="this.src=''; this.alt='Imagen no disponible'; this.style.display='none';" src="assets/Img/Guess/Guess_Mujer_Tenis_Blancos_700_23.5-25-25.5-26-26.5.jpg"/>
+      </div>
+      </div>
+      <div class="space-y-2">
+      <h3 class="font-medium text-black">
+               Tenis Blancos
+              </h3>
+      <p class="text-gray-500 text-sm">
+               Guess - Tenis para Mujer
+              </p>
+      <p class="font-medium text-black">
+               $700
+              </p>
+      <!-- Size selector -->
+      <div class="size-selector mt-4 opacity-0 group-hover:opacity-100 transition-opacity">
+      <p class="text-sm text-gray-600 mb-2">
+                Talla:
+               </p>
+      <div class="grid grid-cols-4 gap-2 mb-4">
+      <button class="size-btn border border-gray-300 hover:border-black py-2 text-sm rounded transition-colors" data-size="23.5">
+                 23.5
+                </button>
+      <button class="size-btn border border-gray-300 hover:border-black py-2 text-sm rounded transition-colors" data-size="25">
+                 25
+                </button>
+      <button class="size-btn border border-gray-300 hover:border-black py-2 text-sm rounded transition-colors" data-size="25.5">
+                 25.5
+                </button>
+      <button class="size-btn border border-gray-300 hover:border-black py-2 text-sm rounded transition-colors" data-size="26">
+                 26
+                </button>
+      <button class="size-btn border border-gray-300 hover:border-black py-2 text-sm rounded transition-colors" data-size="26.5">
+                 26.5
+                </button>
+      </div>
+      </div>
+      <button class="whatsapp-btn w-full nike-button bg-green-600 text-white py-3 mt-2 opacity-0 group-hover:opacity-100 transition-opacity hover:bg-green-700" disabled="">
+               Comprar por WhatsApp
+              </button>
+      </div>
+      </div>
+
+      <div class="product-card nike-hover group cursor-pointer" data-brand="adidas" data-gender="hombre">
+                <div class="relative overflow-hidden bg-gray-50 rounded-lg mb-4">
+                  <div class="product-image h-72 sm:h-80 flex items-center justify-center p-4">
+                    <img alt="Samba Blanco Negro Gris" class="w-full h-full object-cover rounded-lg" onerror="this.src=''; this.alt='Imagen no disponible'; this.style.display='none';" src="assets/Img/Adidas/Adidas_Unisex_Samba_BlancoNegroGris_560_22-22.5-23-23.5-24-24.5-25-25.5-26-26.5-27-27.5-28-28.5-29-29.5.jpg"/>
+                  </div>
+                </div>
+                <div class="space-y-2">
+                  <h3 class="font-medium text-black">Samba Blanco Negro Gris</h3>
+                  <p class="text-gray-500 text-sm">Adidas - Tenis para Hombre</p>
+                  <p class="font-medium text-black">$560</p>
+                  <!-- Size selector -->
+                  <div class="size-selector mt-4 opacity-0 group-hover:opacity-100 transition-opacity">
+                    <p class="text-sm text-gray-600 mb-2">Talla:</p>
+                    <div class="grid grid-cols-4 gap-2 mb-4">
+                  <button class="size-btn border border-gray-300 hover:border-black py-2 text-sm rounded transition-colors" data-size="22">22</button>
+                  <button class="size-btn border border-gray-300 hover:border-black py-2 text-sm rounded transition-colors" data-size="22.5">22.5</button>
+                  <button class="size-btn border border-gray-300 hover:border-black py-2 text-sm rounded transition-colors" data-size="23">23</button>
+                  <button class="size-btn border border-gray-300 hover:border-black py-2 text-sm rounded transition-colors" data-size="23.5">23.5</button>
+                  <button class="size-btn border border-gray-300 hover:border-black py-2 text-sm rounded transition-colors" data-size="24">24</button>
+                  <button class="size-btn border border-gray-300 hover:border-black py-2 text-sm rounded transition-colors" data-size="24.5">24.5</button>
+                  <button class="size-btn border border-gray-300 hover:border-black py-2 text-sm rounded transition-colors" data-size="25">25</button>
+                  <button class="size-btn border border-gray-300 hover:border-black py-2 text-sm rounded transition-colors" data-size="25.5">25.5</button>
+                  <button class="size-btn border border-gray-300 hover:border-black py-2 text-sm rounded transition-colors" data-size="26">26</button>
+                  <button class="size-btn border border-gray-300 hover:border-black py-2 text-sm rounded transition-colors" data-size="26.5">26.5</button>
+                  <button class="size-btn border border-gray-300 hover:border-black py-2 text-sm rounded transition-colors" data-size="27">27</button>
+                  <button class="size-btn border border-gray-300 hover:border-black py-2 text-sm rounded transition-colors" data-size="27.5">27.5</button>
+                  <button class="size-btn border border-gray-300 hover:border-black py-2 text-sm rounded transition-colors" data-size="28">28</button>
+                  <button class="size-btn border border-gray-300 hover:border-black py-2 text-sm rounded transition-colors" data-size="28.5">28.5</button>
+                  <button class="size-btn border border-gray-300 hover:border-black py-2 text-sm rounded transition-colors" data-size="29">29</button>
+                  <button class="size-btn border border-gray-300 hover:border-black py-2 text-sm rounded transition-colors" data-size="29.5">29.5</button>
+                    </div>
+                  </div>
+                  <button class="whatsapp-btn w-full nike-button bg-green-600 text-white py-3 mt-2 opacity-0 group-hover:opacity-100 transition-opacity hover:bg-green-700" disabled="">
+                    Comprar por WhatsApp
+                  </button>
+                </div>
+              </div>
+
+      <div class="product-card nike-hover group cursor-pointer" data-brand="fila" data-gender="ninos">
+      <div class="relative overflow-hidden bg-gray-50 rounded-lg mb-4">
+      <div class="product-image h-72 sm:h-80 flex items-center justify-center p-4">
+      <img alt="Disruptor Triple Blanco" class="w-full h-full object-cover rounded-lg" onerror="this.src=''; this.alt='Imagen no disponible'; this.style.display='none';" src="assets/Img/Niños/Fila_Ninos_Disruptor_TripleBlanco_450_15-15_5-16-16_5-17-17_5-18-18_5-20-20_5-21-21_5.jpg"/>
+      </div>
+      </div>
+      <div class="space-y-2">
+      <h3 class="font-medium text-black">
+               Disruptor Triple Blanco
+              </h3>
+      <p class="text-gray-500 text-sm">
+               Fila - Tenis para Niños
+              </p>
+      <p class="font-medium text-black">
+               $450
+              </p>
+      <div class="size-selector mt-4 opacity-0 group-hover:opacity-100 transition-opacity">
+      <p class="text-sm text-gray-600 mb-2">
+                Talla:
+               </p>
+      <div class="grid grid-cols-4 gap-2 mb-4">
+      <button class="size-btn border border-gray-300 hover:border-black py-2 text-sm rounded transition-colors" data-size="15">
+                 15
+                </button>
+      <button class="size-btn border border-gray-300 hover:border-black py-2 text-sm rounded transition-colors" data-size="15.5">
+                 15.5
+                </button>
+      <button class="size-btn border border-gray-300 hover:border-black py-2 text-sm rounded transition-colors" data-size="16">
+                 16
+                </button>
+      <button class="size-btn border border-gray-300 hover:border-black py-2 text-sm rounded transition-colors" data-size="16.5">
+                 16.5
+                </button>
+      <button class="size-btn border border-gray-300 hover:border-black py-2 text-sm rounded transition-colors" data-size="17">
+                 17
+                </button>
+      <button class="size-btn border border-gray-300 hover:border-black py-2 text-sm rounded transition-colors" data-size="17.5">
+                 17.5
+                </button>
+      <button class="size-btn border border-gray-300 hover:border-black py-2 text-sm rounded transition-colors" data-size="18">
+                 18
+                </button>
+      <button class="size-btn border border-gray-300 hover:border-black py-2 text-sm rounded transition-colors" data-size="18.5">
+                 18.5
+                </button>
+      <button class="size-btn border border-gray-300 hover:border-black py-2 text-sm rounded transition-colors" data-size="20">
+                 20
+                </button>
+      <button class="size-btn border border-gray-300 hover:border-black py-2 text-sm rounded transition-colors" data-size="20.5">
+                 20.5
+                </button>
+      <button class="size-btn border border-gray-300 hover:border-black py-2 text-sm rounded transition-colors" data-size="21">
+                 21
+                </button>
+      <button class="size-btn border border-gray-300 hover:border-black py-2 text-sm rounded transition-colors" data-size="21.5">
+                 21.5
+                </button>
+      </div>
+      </div>
+      <button class="whatsapp-btn w-full nike-button bg-green-600 text-white py-3 mt-2 opacity-0 group-hover:opacity-100 transition-opacity hover:bg-green-700" disabled="">
+               Comprar por WhatsApp
+              </button>
+      </div>
+      </div>
+
+      <div class="product-card nike-hover group cursor-pointer" data-brand="newbalance" data-gender="hombre">
+                <div class="relative overflow-hidden bg-gray-50 rounded-lg mb-4">
+                  <div class="product-image h-72 sm:h-80 flex items-center justify-center p-4">
+                    <img alt="5 5 0 Azul Gamuza" class="w-full h-full object-cover rounded-lg" onerror="this.src=''; this.alt='Imagen no disponible'; this.style.display='none';" src="assets/Img/NewBalance/NewBalance_Hombre_550_AzulGamuza_640_23-24.5-25-25.5-26-26.5-27-27.5-28-28.5.jpg"/>
+                  </div>
+                </div>
+                <div class="space-y-2">
+                  <h3 class="font-medium text-black">5 5 0 Azul Gamuza</h3>
+                  <p class="text-gray-500 text-sm">NewBalance - Tenis para Hombre</p>
+                  <p class="font-medium text-black">$640</p>
+                  <!-- Size selector -->
+                  <div class="size-selector mt-4 opacity-0 group-hover:opacity-100 transition-opacity">
+                    <p class="text-sm text-gray-600 mb-2">Talla:</p>
+                    <div class="grid grid-cols-4 gap-2 mb-4">
+                  <button class="size-btn border border-gray-300 hover:border-black py-2 text-sm rounded transition-colors" data-size="23">23</button>
+                  <button class="size-btn border border-gray-300 hover:border-black py-2 text-sm rounded transition-colors" data-size="24.5">24.5</button>
+                  <button class="size-btn border border-gray-300 hover:border-black py-2 text-sm rounded transition-colors" data-size="25">25</button>
+                  <button class="size-btn border border-gray-300 hover:border-black py-2 text-sm rounded transition-colors" data-size="25.5">25.5</button>
+                  <button class="size-btn border border-gray-300 hover:border-black py-2 text-sm rounded transition-colors" data-size="26">26</button>
+                  <button class="size-btn border border-gray-300 hover:border-black py-2 text-sm rounded transition-colors" data-size="26.5">26.5</button>
+                  <button class="size-btn border border-gray-300 hover:border-black py-2 text-sm rounded transition-colors" data-size="27">27</button>
+                  <button class="size-btn border border-gray-300 hover:border-black py-2 text-sm rounded transition-colors" data-size="27.5">27.5</button>
+                  <button class="size-btn border border-gray-300 hover:border-black py-2 text-sm rounded transition-colors" data-size="28">28</button>
+                  <button class="size-btn border border-gray-300 hover:border-black py-2 text-sm rounded transition-colors" data-size="28.5">28.5</button>
+                    </div>
+                  </div>
+                  <button class="whatsapp-btn w-full nike-button bg-green-600 text-white py-3 mt-2 opacity-0 group-hover:opacity-100 transition-opacity hover:bg-green-700" disabled="">
+                    Comprar por WhatsApp
+                  </button>
+                </div>
+              </div>
+
+      <div class="product-card nike-hover group cursor-pointer" data-brand="nike" data-gender="hombre">
+                <div class="relative overflow-hidden bg-gray-50 rounded-lg mb-4">
+                  <div class="product-image h-72 sm:h-80 flex items-center justify-center p-4">
+                    <img alt="Air Jordan 1 Low Blanco Verde Militar" class="w-full h-full object-cover rounded-lg" onerror="this.src=''; this.alt='Imagen no disponible'; this.style.display='none';" src="assets/Img/Nike/Nike_Hombre_AirJordan1Low_BlancoVerdeMilitar_750_22.5-23-23.5-24-24.5-25.5-26.jpg"/>
+                  </div>
+                </div>
+                <div class="space-y-2">
+                  <h3 class="font-medium text-black">Air Jordan 1 Low Blanco Verde Militar</h3>
+                  <p class="text-gray-500 text-sm">Nike - Tenis para Hombre</p>
+                  <p class="font-medium text-black">$750</p>
+                  <!-- Size selector -->
+                  <div class="size-selector mt-4 opacity-0 group-hover:opacity-100 transition-opacity">
+                    <p class="text-sm text-gray-600 mb-2">Talla:</p>
+                    <div class="grid grid-cols-4 gap-2 mb-4">
+                  <button class="size-btn border border-gray-300 hover:border-black py-2 text-sm rounded transition-colors" data-size="22.5">22.5</button>
+                  <button class="size-btn border border-gray-300 hover:border-black py-2 text-sm rounded transition-colors" data-size="23">23</button>
+                  <button class="size-btn border border-gray-300 hover:border-black py-2 text-sm rounded transition-colors" data-size="23.5">23.5</button>
+                  <button class="size-btn border border-gray-300 hover:border-black py-2 text-sm rounded transition-colors" data-size="24">24</button>
+                  <button class="size-btn border border-gray-300 hover:border-black py-2 text-sm rounded transition-colors" data-size="24.5">24.5</button>
+                  <button class="size-btn border border-gray-300 hover:border-black py-2 text-sm rounded transition-colors" data-size="25.5">25.5</button>
+                  <button class="size-btn border border-gray-300 hover:border-black py-2 text-sm rounded transition-colors" data-size="26">26</button>
+                    </div>
+                  </div>
+                  <button class="whatsapp-btn w-full nike-button bg-green-600 text-white py-3 mt-2 opacity-0 group-hover:opacity-100 transition-opacity hover:bg-green-700" disabled="">
+                    Comprar por WhatsApp
+                  </button>
+                </div>
+              </div>
+
+      <div class="product-card nike-hover group cursor-pointer" data-brand="nike" data-gender="hombre">
+                <div class="relative overflow-hidden bg-gray-50 rounded-lg mb-4">
+                  <div class="product-image h-72 sm:h-80 flex items-center justify-center p-4">
+                    <img alt="Air Jordan 1 Mid Blanco Gris Negro" class="w-full h-full object-cover rounded-lg" onerror="this.src=''; this.alt='Imagen no disponible'; this.style.display='none';" src="assets/Img/Nike/Nike_Hombre_AirJordan1Mid_BlancoGrisNegro_670_22-22.5-23-23.5-24-24.5-25-25.5-26-26.5-27-27.5-28-28.5.jpg"/>
+                  </div>
+                </div>
+                <div class="space-y-2">
+                  <h3 class="font-medium text-black">Air Jordan 1 Mid Blanco Gris Negro</h3>
+                  <p class="text-gray-500 text-sm">Nike - Tenis para Hombre</p>
+                  <p class="font-medium text-black">$670</p>
+                  <!-- Size selector -->
+                  <div class="size-selector mt-4 opacity-0 group-hover:opacity-100 transition-opacity">
+                    <p class="text-sm text-gray-600 mb-2">Talla:</p>
+                    <div class="grid grid-cols-4 gap-2 mb-4">
+                  <button class="size-btn border border-gray-300 hover:border-black py-2 text-sm rounded transition-colors" data-size="22">22</button>
+                  <button class="size-btn border border-gray-300 hover:border-black py-2 text-sm rounded transition-colors" data-size="22.5">22.5</button>
+                  <button class="size-btn border border-gray-300 hover:border-black py-2 text-sm rounded transition-colors" data-size="23">23</button>
+                  <button class="size-btn border border-gray-300 hover:border-black py-2 text-sm rounded transition-colors" data-size="23.5">23.5</button>
+                  <button class="size-btn border border-gray-300 hover:border-black py-2 text-sm rounded transition-colors" data-size="24">24</button>
+                  <button class="size-btn border border-gray-300 hover:border-black py-2 text-sm rounded transition-colors" data-size="24.5">24.5</button>
+                  <button class="size-btn border border-gray-300 hover:border-black py-2 text-sm rounded transition-colors" data-size="25">25</button>
+                  <button class="size-btn border border-gray-300 hover:border-black py-2 text-sm rounded transition-colors" data-size="25.5">25.5</button>
+                  <button class="size-btn border border-gray-300 hover:border-black py-2 text-sm rounded transition-colors" data-size="26">26</button>
+                  <button class="size-btn border border-gray-300 hover:border-black py-2 text-sm rounded transition-colors" data-size="26.5">26.5</button>
+                  <button class="size-btn border border-gray-300 hover:border-black py-2 text-sm rounded transition-colors" data-size="27">27</button>
+                  <button class="size-btn border border-gray-300 hover:border-black py-2 text-sm rounded transition-colors" data-size="27.5">27.5</button>
+                  <button class="size-btn border border-gray-300 hover:border-black py-2 text-sm rounded transition-colors" data-size="28">28</button>
+                  <button class="size-btn border border-gray-300 hover:border-black py-2 text-sm rounded transition-colors" data-size="28.5">28.5</button>
+                    </div>
+                  </div>
+                  <button class="whatsapp-btn w-full nike-button bg-green-600 text-white py-3 mt-2 opacity-0 group-hover:opacity-100 transition-opacity hover:bg-green-700" disabled="">
+                    Comprar por WhatsApp
+                  </button>
+                </div>
+              </div>
+    </div>
+  </div>
 </section>
 <!-- Categories -->
 <section class="py-20 bg-gray-50">
@@ -4165,21 +4481,245 @@
 </section>
 <!-- Nuevos Lanzamientos Page -->
 <section class="py-20 bg-white hidden" id="nuevos-lanzamientos-page">
-<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-<div class="text-center mb-16">
-<h2 class="text-3xl font-bold text-black mb-4">
-       Nuevos Lanzamientos
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-16">
+      <h2 class="text-3xl font-bold text-black mb-4">
+        Nuevos Lanzamientos
       </h2>
-<p class="text-gray-600 font-light">
-       Los últimos modelos que acaban de llegar
+      <p class="text-gray-600 font-light">
+        Los últimos modelos que acaban de llegar
       </p>
-</div>
-<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-<!-- New Launch Product 1 -->
-<!-- New Launch Product 2 -->
-<!-- New Launch Product 3 -->
-</div>
-</div>
+    </div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+      <div class="product-card nike-hover group cursor-pointer" data-brand="converse" data-gender="hombre">
+                <div class="relative overflow-hidden bg-gray-50 rounded-lg mb-4">
+                  <div class="product-image h-72 sm:h-80 flex items-center justify-center p-4">
+                    <img alt="Retro Run Star Blanco Beige Goma Cafe" class="w-full h-full object-cover rounded-lg" onerror="this.src=''; this.alt='Imagen no disponible'; this.style.display='none';" src="assets/Img/Converse/Converse_Unisex_RetroRunStar_BlancoBeigeGomaCafe_600_26.5-27.5-28-28.5.jpg"/>
+                  </div>
+                </div>
+                <div class="space-y-2">
+                  <h3 class="font-medium text-black">Retro Run Star Blanco Beige Goma Cafe</h3>
+                  <p class="text-gray-500 text-sm">Converse - Tenis para Hombre</p>
+                  <p class="font-medium text-black">$600</p>
+                  <!-- Size selector -->
+                  <div class="size-selector mt-4 opacity-0 group-hover:opacity-100 transition-opacity">
+                    <p class="text-sm text-gray-600 mb-2">Talla:</p>
+                    <div class="grid grid-cols-4 gap-2 mb-4">
+                  <button class="size-btn border border-gray-300 hover:border-black py-2 text-sm rounded transition-colors" data-size="26.5">26.5</button>
+                  <button class="size-btn border border-gray-300 hover:border-black py-2 text-sm rounded transition-colors" data-size="27.5">27.5</button>
+                  <button class="size-btn border border-gray-300 hover:border-black py-2 text-sm rounded transition-colors" data-size="28">28</button>
+                  <button class="size-btn border border-gray-300 hover:border-black py-2 text-sm rounded transition-colors" data-size="28.5">28.5</button>
+                    </div>
+                  </div>
+                  <button class="whatsapp-btn w-full nike-button bg-green-600 text-white py-3 mt-2 opacity-0 group-hover:opacity-100 transition-opacity hover:bg-green-700" disabled="">
+                    Comprar por WhatsApp
+                  </button>
+                </div>
+              </div>
+
+      <div class="product-card nike-hover group cursor-pointer" data-brand="lacoste" data-gender="hombre">
+                <div class="relative overflow-hidden bg-gray-50 rounded-lg mb-4">
+                  <div class="product-image h-72 sm:h-80 flex items-center justify-center p-4">
+                    <img alt="Deportivo Classic Negro Blanco" class="w-full h-full object-cover rounded-lg" onerror="this.src=''; this.alt='Imagen no disponible'; this.style.display='none';" src="assets/Img/Lacoste/Lacoste_Hombre_DeportivoClassic_NegroBlanco_600_26-26.5-27-27.5-28-28.5-29-29.5.jpg"/>
+                  </div>
+                </div>
+                <div class="space-y-2">
+                  <h3 class="font-medium text-black">Deportivo Classic Negro Blanco</h3>
+                  <p class="text-gray-500 text-sm">Lacoste - Tenis para Hombre</p>
+                  <p class="font-medium text-black">$600</p>
+                  <!-- Size selector -->
+                  <div class="size-selector mt-4 opacity-0 group-hover:opacity-100 transition-opacity">
+                    <p class="text-sm text-gray-600 mb-2">Talla:</p>
+                    <div class="grid grid-cols-4 gap-2 mb-4">
+                  <button class="size-btn border border-gray-300 hover:border-black py-2 text-sm rounded transition-colors" data-size="26">26</button>
+                  <button class="size-btn border border-gray-300 hover:border-black py-2 text-sm rounded transition-colors" data-size="26.5">26.5</button>
+                  <button class="size-btn border border-gray-300 hover:border-black py-2 text-sm rounded transition-colors" data-size="27">27</button>
+                  <button class="size-btn border border-gray-300 hover:border-black py-2 text-sm rounded transition-colors" data-size="27.5">27.5</button>
+                  <button class="size-btn border border-gray-300 hover:border-black py-2 text-sm rounded transition-colors" data-size="28">28</button>
+                  <button class="size-btn border border-gray-300 hover:border-black py-2 text-sm rounded transition-colors" data-size="28.5">28.5</button>
+                  <button class="size-btn border border-gray-300 hover:border-black py-2 text-sm rounded transition-colors" data-size="29">29</button>
+                  <button class="size-btn border border-gray-300 hover:border-black py-2 text-sm rounded transition-colors" data-size="29.5">29.5</button>
+                    </div>
+                  </div>
+                  <button class="whatsapp-btn w-full nike-button bg-green-600 text-white py-3 mt-2 opacity-0 group-hover:opacity-100 transition-opacity hover:bg-green-700" disabled="">
+                    Comprar por WhatsApp
+                  </button>
+                </div>
+              </div>
+
+      <div class="product-card nike-hover group cursor-pointer" data-brand="murphy" data-gender="hombre">
+                <div class="relative overflow-hidden bg-gray-50 rounded-lg mb-4">
+                  <div class="product-image h-72 sm:h-80 flex items-center justify-center p-4">
+                    <img alt="Bota Trabajo Cafe" class="w-full h-full object-cover rounded-lg" onerror="this.src=''; this.alt='Imagen no disponible'; this.style.display='none';" src="assets/Img/Murphy/Murphy_Hombre_BotaTrabajo_Cafe_700_22-23-23.5-25-28.5-29.5.jpg"/>
+                  </div>
+                </div>
+                <div class="space-y-2">
+                  <h3 class="font-medium text-black">Bota Trabajo Cafe</h3>
+                  <p class="text-gray-500 text-sm">Murphy - Tenis para Hombre</p>
+                  <p class="font-medium text-black">$700</p>
+                  <!-- Size selector -->
+                  <div class="size-selector mt-4 opacity-0 group-hover:opacity-100 transition-opacity">
+                    <p class="text-sm text-gray-600 mb-2">Talla:</p>
+                    <div class="grid grid-cols-4 gap-2 mb-4">
+                  <button class="size-btn border border-gray-300 hover:border-black py-2 text-sm rounded transition-colors" data-size="22">22</button>
+                  <button class="size-btn border border-gray-300 hover:border-black py-2 text-sm rounded transition-colors" data-size="23">23</button>
+                  <button class="size-btn border border-gray-300 hover:border-black py-2 text-sm rounded transition-colors" data-size="23.5">23.5</button>
+                  <button class="size-btn border border-gray-300 hover:border-black py-2 text-sm rounded transition-colors" data-size="25">25</button>
+                  <button class="size-btn border border-gray-300 hover:border-black py-2 text-sm rounded transition-colors" data-size="28.5">28.5</button>
+                  <button class="size-btn border border-gray-300 hover:border-black py-2 text-sm rounded transition-colors" data-size="29.5">29.5</button>
+                    </div>
+                  </div>
+                  <button class="whatsapp-btn w-full nike-button bg-green-600 text-white py-3 mt-2 opacity-0 group-hover:opacity-100 transition-opacity hover:bg-green-700" disabled="">
+                    Comprar por WhatsApp
+                  </button>
+                </div>
+              </div>
+
+      <div class="product-card nike-hover group cursor-pointer" data-brand="nike" data-gender="hombre">
+                <div class="relative overflow-hidden bg-gray-50 rounded-lg mb-4">
+                  <div class="product-image h-72 sm:h-80 flex items-center justify-center p-4">
+                    <img alt="M2 K Blanco" class="w-full h-full object-cover rounded-lg" onerror="this.src=''; this.alt='Imagen no disponible'; this.style.display='none';" src="assets/Img/Nike/Nike_Unisex_M2K_Blanco_680_23-24-24.5-25-25.5-26.jpg"/>
+                  </div>
+                </div>
+                <div class="space-y-2">
+                  <h3 class="font-medium text-black">M2 K Blanco</h3>
+                  <p class="text-gray-500 text-sm">Nike - Tenis para Hombre</p>
+                  <p class="font-medium text-black">$680</p>
+                  <!-- Size selector -->
+                  <div class="size-selector mt-4 opacity-0 group-hover:opacity-100 transition-opacity">
+                    <p class="text-sm text-gray-600 mb-2">Talla:</p>
+                    <div class="grid grid-cols-4 gap-2 mb-4">
+                  <button class="size-btn border border-gray-300 hover:border-black py-2 text-sm rounded transition-colors" data-size="23">23</button>
+                  <button class="size-btn border border-gray-300 hover:border-black py-2 text-sm rounded transition-colors" data-size="24">24</button>
+                  <button class="size-btn border border-gray-300 hover:border-black py-2 text-sm rounded transition-colors" data-size="24.5">24.5</button>
+                  <button class="size-btn border border-gray-300 hover:border-black py-2 text-sm rounded transition-colors" data-size="25">25</button>
+                  <button class="size-btn border border-gray-300 hover:border-black py-2 text-sm rounded transition-colors" data-size="25.5">25.5</button>
+                  <button class="size-btn border border-gray-300 hover:border-black py-2 text-sm rounded transition-colors" data-size="26">26</button>
+                    </div>
+                  </div>
+                  <button class="whatsapp-btn w-full nike-button bg-green-600 text-white py-3 mt-2 opacity-0 group-hover:opacity-100 transition-opacity hover:bg-green-700" disabled="">
+                    Comprar por WhatsApp
+                  </button>
+                </div>
+              </div>
+
+      <div class="product-card nike-hover group cursor-pointer" data-brand="alo" data-gender="mujer">
+      <div class="relative overflow-hidden bg-gray-50 rounded-lg mb-4">
+      <div class="product-image h-72 sm:h-80 flex items-center justify-center p-4">
+      <img alt="Sandalias Varios Colores" class="w-full h-full object-cover rounded-lg" onerror="this.src=''; this.alt='Imagen no disponible'; this.style.display='none';" src="assets/Img/Alo/Alo_Mujer_Sandalias_VariosColores_300_23.jpg"/>
+      </div>
+      </div>
+      <div class="space-y-2">
+      <h3 class="font-medium text-black">
+               Sandalias Varios Colores
+              </h3>
+      <p class="text-gray-500 text-sm">
+               Alo - Tenis para Mujer
+              </p>
+      <p class="font-medium text-black">
+               $300
+              </p>
+      <div class="size-selector mt-4 opacity-0 group-hover:opacity-100 transition-opacity">
+      <p class="text-sm text-gray-600 mb-2">
+                Talla:
+               </p>
+      <div class="grid grid-cols-4 gap-2 mb-4">
+      <button class="size-btn border border-gray-300 hover:border-black py-2 text-sm rounded transition-colors" data-size="23">
+                 23
+                </button>
+      </div>
+      </div>
+      <button class="whatsapp-btn w-full nike-button bg-green-600 text-white py-3 mt-2 opacity-0 group-hover:opacity-100 transition-opacity hover:bg-green-700" disabled="">
+               Comprar por WhatsApp
+              </button>
+      </div>
+      </div>
+
+      <div class="product-card nike-hover group cursor-pointer" data-brand="converse" data-gender="mujer">
+                <div class="relative overflow-hidden bg-gray-50 rounded-lg mb-4">
+                  <div class="product-image h-72 sm:h-80 flex items-center justify-center p-4">
+                    <img alt="All Star Bota Plataforma Beige Suela Alta" class="w-full h-full object-cover rounded-lg" onerror="this.src=''; this.alt='Imagen no disponible'; this.style.display='none';" src="assets/Img/Converse/Converse_Mujer_AllStarBotaPlataforma_BeigeSuelaAlta_560_23-23.5-24-24.5-25-25.5-26-26.5.jpg"/>
+                  </div>
+                </div>
+                <div class="space-y-2">
+                  <h3 class="font-medium text-black">All Star Bota Plataforma Beige Suela Alta</h3>
+                  <p class="text-gray-500 text-sm">Converse - Tenis para Mujer</p>
+                  <p class="font-medium text-black">$560</p>
+                  <!-- Size selector -->
+                  <div class="size-selector mt-4 opacity-0 group-hover:opacity-100 transition-opacity">
+                    <p class="text-sm text-gray-600 mb-2">Talla:</p>
+                    <div class="grid grid-cols-4 gap-2 mb-4">
+                  <button class="size-btn border border-gray-300 hover:border-black py-2 text-sm rounded transition-colors" data-size="23">23</button>
+                  <button class="size-btn border border-gray-300 hover:border-black py-2 text-sm rounded transition-colors" data-size="23.5">23.5</button>
+                  <button class="size-btn border border-gray-300 hover:border-black py-2 text-sm rounded transition-colors" data-size="24">24</button>
+                  <button class="size-btn border border-gray-300 hover:border-black py-2 text-sm rounded transition-colors" data-size="24.5">24.5</button>
+                  <button class="size-btn border border-gray-300 hover:border-black py-2 text-sm rounded transition-colors" data-size="25">25</button>
+                  <button class="size-btn border border-gray-300 hover:border-black py-2 text-sm rounded transition-colors" data-size="25.5">25.5</button>
+                  <button class="size-btn border border-gray-300 hover:border-black py-2 text-sm rounded transition-colors" data-size="26">26</button>
+                  <button class="size-btn border border-gray-300 hover:border-black py-2 text-sm rounded transition-colors" data-size="26.5">26.5</button>
+                    </div>
+                  </div>
+                  <button class="whatsapp-btn w-full nike-button bg-green-600 text-white py-3 mt-2 opacity-0 group-hover:opacity-100 transition-opacity hover:bg-green-700" disabled="">
+                    Comprar por WhatsApp
+                  </button>
+                </div>
+              </div>
+
+      <div class="product-card nike-hover group cursor-pointer" data-brand="guess" data-gender="mujer">
+                <div class="relative overflow-hidden bg-gray-50 rounded-lg mb-4">
+                  <div class="product-image h-72 sm:h-80 flex items-center justify-center p-4">
+                    <img alt="Chunky Fashion Beige Cafe Tonos Tierra" class="w-full h-full object-cover rounded-lg" onerror="this.src=''; this.alt='Imagen no disponible'; this.style.display='none';" src="assets/Img/Guess/Guess_Mujer_ChunkyFashion_BeigeCafeTonosTierra_790_23-23.5-24-24.5-25-25.5-26-26.5.jpg"/>
+                  </div>
+                </div>
+                <div class="space-y-2">
+                  <h3 class="font-medium text-black">Chunky Fashion Beige Cafe Tonos Tierra</h3>
+                  <p class="text-gray-500 text-sm">Guess - Tenis para Mujer</p>
+                  <p class="font-medium text-black">$790</p>
+                  <!-- Size selector -->
+                  <div class="size-selector mt-4 opacity-0 group-hover:opacity-100 transition-opacity">
+                    <p class="text-sm text-gray-600 mb-2">Talla:</p>
+                    <div class="grid grid-cols-4 gap-2 mb-4">
+                  <button class="size-btn border border-gray-300 hover:border-black py-2 text-sm rounded transition-colors" data-size="23">23</button>
+                  <button class="size-btn border border-gray-300 hover:border-black py-2 text-sm rounded transition-colors" data-size="23.5">23.5</button>
+                  <button class="size-btn border border-gray-300 hover:border-black py-2 text-sm rounded transition-colors" data-size="24">24</button>
+                  <button class="size-btn border border-gray-300 hover:border-black py-2 text-sm rounded transition-colors" data-size="24.5">24.5</button>
+                  <button class="size-btn border border-gray-300 hover:border-black py-2 text-sm rounded transition-colors" data-size="25">25</button>
+                  <button class="size-btn border border-gray-300 hover:border-black py-2 text-sm rounded transition-colors" data-size="25.5">25.5</button>
+                  <button class="size-btn border border-gray-300 hover:border-black py-2 text-sm rounded transition-colors" data-size="26">26</button>
+                  <button class="size-btn border border-gray-300 hover:border-black py-2 text-sm rounded transition-colors" data-size="26.5">26.5</button>
+                    </div>
+                  </div>
+                  <button class="whatsapp-btn w-full nike-button bg-green-600 text-white py-3 mt-2 opacity-0 group-hover:opacity-100 transition-opacity hover:bg-green-700" disabled="">
+                    Comprar por WhatsApp
+                  </button>
+                </div>
+              </div>
+
+      <div class="product-card nike-hover group cursor-pointer" data-brand="nike" data-gender="mujer">
+                <div class="relative overflow-hidden bg-gray-50 rounded-lg mb-4">
+                  <div class="product-image h-72 sm:h-80 flex items-center justify-center p-4">
+                    <img alt="Sandalia Deportiva 2 Tiras Rojo Blanco" class="w-full h-full object-cover rounded-lg" onerror="this.src=''; this.alt='Imagen no disponible'; this.style.display='none';" src="assets/Img/Nike/Nike_Mujer_SandaliaDeportiva2Tiras_RojoBlanco_450_23-26.jpg"/>
+                  </div>
+                </div>
+                <div class="space-y-2">
+                  <h3 class="font-medium text-black">Sandalia Deportiva 2 Tiras Rojo Blanco</h3>
+                  <p class="text-gray-500 text-sm">Nike - Tenis para Mujer</p>
+                  <p class="font-medium text-black">$450</p>
+                  <!-- Size selector -->
+                  <div class="size-selector mt-4 opacity-0 group-hover:opacity-100 transition-opacity">
+                    <p class="text-sm text-gray-600 mb-2">Talla:</p>
+                    <div class="grid grid-cols-4 gap-2 mb-4">
+                  <button class="size-btn border border-gray-300 hover:border-black py-2 text-sm rounded transition-colors" data-size="23">23</button>
+                  <button class="size-btn border border-gray-300 hover:border-black py-2 text-sm rounded transition-colors" data-size="26">26</button>
+                    </div>
+                  </div>
+                  <button class="whatsapp-btn w-full nike-button bg-green-600 text-white py-3 mt-2 opacity-0 group-hover:opacity-100 transition-opacity hover:bg-green-700" disabled="">
+                    Comprar por WhatsApp
+                  </button>
+                </div>
+              </div>
+    </div>
+  </div>
 </section>
 <!-- Niños Page -->
 <section class="py-20 bg-white hidden" id="ninos-page">
@@ -14205,7 +14745,18 @@
     // Tu número de WhatsApp
     const whatsappNumber = '3325503778';
     
-    sizeButtons.forEach(button => {
+        // Helper: crear un ID único por producto a partir del nombre
+    function slugifyProductName(name) {
+      if (!name) return '';
+      return name
+        .toString()
+        .toLowerCase()
+        .normalize('NFD').replace(/[\u0300-\u036f]/g, '') // quitar acentos
+        .replace(/[^a-z0-9]+/g, '-')                      // todo lo que no sea letras/números -> -
+        .replace(/(^-|-$)+/g, '');                        // quitar guiones al inicio/fin
+    }
+
+sizeButtons.forEach(button => {
       button.addEventListener('click', function(event) {
         event.stopPropagation();
         
@@ -14241,27 +14792,45 @@
     whatsappButtons.forEach(button => {
       button.addEventListener('click', function(event) {
         event.stopPropagation();
-        
+
         if (this.disabled) return;
-        
+
         const productName = this.dataset.product;
         const productPrice = this.dataset.price;
         const selectedSize = this.dataset.size;
-        
-        // Create WhatsApp message
+
+        // Buscar la tarjeta del producto y generar un link específico
+        const productCard = this.closest('.product-card');
+        let productUrl = 'https://sneakers-zone.github.io/SneakerZone/';
+
+        if (productCard) {
+          // Si la tarjeta todavía no tiene ID, se lo generamos a partir del nombre
+          if (!productCard.id) {
+            const slug = slugifyProductName(productName || '');
+            if (slug) {
+              productCard.id = 'product-' + slug;
+            }
+          }
+          // Si ya tiene ID, usamos ese ID como ancla
+          if (productCard.id) {
+            productUrl = productUrl + '#' + productCard.id;
+          }
+        }
+
+        // Crear mensaje de WhatsApp
         const message = `¡Hola! Me interesa este producto:
-        
+
 🔥 *${productName}*
 💰 Precio: ${productPrice}
 👟 Talla: ${selectedSize}
-🌐 Link: ${window.location.href}
+🌐 Link: ${productUrl}
 
 ¿Podrías darme más información?`;
-        
-        // Create WhatsApp URL
+
+        // Crear URL de WhatsApp
         const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
-        
-        // Open WhatsApp in new tab
+
+        // Abrir WhatsApp en una nueva pestaña
         window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
       });
     });
