@@ -207,6 +207,31 @@
     display: none;
   }
 </style>
+
+<style>
+  /* Modal de producto grande */
+  .product-modal-backdrop{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.6);
+    display:none;
+    z-index:90;
+  }
+  .product-modal{
+    position:fixed;
+    inset:0;
+    display:none;
+    z-index:100;
+    align-items:center;
+    justify-content:center;
+    padding:1rem;
+  }
+  .product-modal.show,
+  .product-modal-backdrop.show{
+    display:flex;
+  }
+</style>
+
 </head>
 <body class="text-black h-full bg-white">
 <!-- Header -->
@@ -14599,6 +14624,33 @@
 </div>
 </div>
 </section>
+
+<!-- Modal producto grande -->
+<div id="product-modal-backdrop" class="product-modal-backdrop"></div>
+<div id="product-modal" class="product-modal">
+  <div class="bg-white rounded-2xl shadow-2xl w-full max-w-3xl mx-auto overflow-hidden relative">
+    <button id="product-modal-close" type="button"
+            class="absolute top-3 right-3 rounded-full border border-gray-300 px-3 py-1 text-xs font-medium text-gray-600 hover:bg-gray-100">
+      Cerrar
+    </button>
+    <div class="grid md:grid-cols-2 gap-0">
+      <div class="bg-gray-50 flex items-center justify-center p-6">
+        <img id="modal-product-image" src="" alt=""
+             class="w-full h-full object-contain max-h-[420px] rounded-lg"/>
+      </div>
+      <div class="p-6 space-y-3">
+        <h3 id="modal-product-name" class="text-2xl font-semibold text-black"></h3>
+        <p id="modal-product-brand" class="text-gray-500 text-sm"></p>
+        <p id="modal-product-price" class="text-xl font-bold text-black"></p>
+        <p id="modal-product-sizes" class="text-sm text-gray-600"></p>
+        <p class="text-xs text-gray-400">
+          Da clic fuera de esta ventana o presiona "Cerrar" para salir.
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- Newsletter -->
 <section class="bg-black text-white py-20">
 <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
@@ -14755,18 +14807,6 @@
         .replace(/[^a-z0-9]+/g, '-')                      // todo lo que no sea letras/números -> -
         .replace(/(^-|-$)+/g, '');                        // quitar guiones al inicio/fin
     }
-    function assignProductIds() {
-      const cards = document.querySelectorAll('.product-card');
-      cards.forEach(card => {
-        if (card.id) return;
-        const nameEl = card.querySelector('h3');
-        if (!nameEl) return;
-        const slug = slugifyProductName(nameEl.textContent || '');
-        if (!slug) return;
-        card.id = 'product-' + slug;
-      });
-    }
-
 
 sizeButtons.forEach(button => {
       button.addEventListener('click', function(event) {
@@ -14813,27 +14853,21 @@ sizeButtons.forEach(button => {
 
         // Buscar la tarjeta del producto y generar un link específico
         const productCard = this.closest('.product-card');
+        let productUrl = 'https://sneakers-zone.github.io/SneakerZone/';
 
-        // URL base (sirve tanto en GitHub Pages como si abres el archivo local)
-        const baseUrl = window.location.origin + window.location.pathname;
-
-        // Aseguramos que la tarjeta tenga un id consistente
-        let productId = '';
         if (productCard) {
+          // Si la tarjeta todavía no tiene ID, se lo generamos a partir del nombre
           if (!productCard.id) {
-            const fallbackName = productName || (productCard.querySelector('h3')?.textContent || '');
-            const slug = slugifyProductName(fallbackName);
+            const slug = slugifyProductName(productName || '');
             if (slug) {
-              productId = 'product-' + slug;
-              productCard.id = productId;
+              productCard.id = 'product-' + slug;
             }
-          } else {
-            productId = productCard.id;
+          }
+          // Si ya tiene ID, usamos ese ID como ancla
+          if (productCard.id) {
+            productUrl = productUrl + '#' + productCard.id;
           }
         }
-
-        // Si logramos generar un id, armamos el link con hash; si no, usamos la URL base
-        const productUrl = productId ? `${baseUrl}#${productId}` : baseUrl;
 
         // Crear mensaje de WhatsApp
         const message = `¡Hola! Me interesa este producto:
@@ -15066,19 +15100,7 @@ sizeButtons.forEach(button => {
 
     // Initialize functionality when page loads
     document.addEventListener('DOMContentLoaded', function() {
-      assignProductIds();
       initializeProductFunctionality();
-
-      // Si la URL ya trae un hash de producto, hacemos scroll hacia él
-      const hash = window.location.hash;
-      if (hash && hash.startsWith('#product-')) {
-        const target = document.querySelector(hash);
-        if (target) {
-          setTimeout(function() {
-            target.scrollIntoView({ behavior: 'smooth', block: 'center' });
-          }, 300);
-        }
-      }
     });
    </script>
 <script>
@@ -17020,6 +17042,73 @@ if (h2 && h2.nextSibling) {
 
       var top = target ? target.offsetTop - 80 : 0;
       window.scrollTo({ top: top, behavior: 'smooth' });
+    });
+  })();
+</script>
+
+
+<script>
+  // Modal de producto grande al hacer clic en la tarjeta
+  (function(){
+    let backdrop, modal, imgEl, nameEl, brandEl, priceEl, sizesEl;
+
+    function initModalRefs(){
+      if (backdrop && modal) return;
+      backdrop = document.getElementById('product-modal-backdrop');
+      modal = document.getElementById('product-modal');
+      if (!backdrop || !modal) return;
+      imgEl = document.getElementById('modal-product-image');
+      nameEl = document.getElementById('modal-product-name');
+      brandEl = document.getElementById('modal-product-brand');
+      priceEl = document.getElementById('modal-product-price');
+      sizesEl = document.getElementById('modal-product-sizes');
+
+      const closeBtn = document.getElementById('product-modal-close');
+      if (closeBtn) closeBtn.addEventListener('click', hideModal);
+      backdrop.addEventListener('click', hideModal);
+      document.addEventListener('keydown', function(e){
+        if (e.key === 'Escape') hideModal();
+      });
+    }
+
+    function showModalFromCard(card){
+      initModalRefs();
+      if (!backdrop || !modal) return;
+
+      const img = card.querySelector('.product-image img');
+      const name = (card.querySelector('h3')?.textContent || '').trim();
+      const brand = (card.querySelector('.text-gray-500')?.textContent || '').trim();
+      const price = (card.querySelector('p.font-medium.text-black')?.textContent || '').trim();
+      const sizes = Array.from(card.querySelectorAll('.size-btn'))
+                         .map(btn => btn.getAttribute('data-size') || btn.textContent.trim());
+
+      if (img && imgEl){
+        imgEl.src = img.getAttribute('src') || '';
+        imgEl.alt = img.getAttribute('alt') || name;
+      }
+      if (nameEl) nameEl.textContent = name;
+      if (brandEl) brandEl.textContent = brand;
+      if (priceEl) priceEl.textContent = price;
+      if (sizesEl) sizesEl.textContent = sizes.length ? 'Tallas disponibles: ' + sizes.join(' - ') : '';
+
+      backdrop.classList.add('show');
+      modal.classList.add('show');
+    }
+
+    function hideModal(){
+      if (!backdrop || !modal) return;
+      backdrop.classList.remove('show');
+      modal.classList.remove('show');
+    }
+
+    document.addEventListener('click', function(e){
+      // Ignorar clics en botones internos (tallas, WhatsApp, favoritos, bolsa, modal de favoritos)
+      if (e.target.closest('.size-btn, .whatsapp-btn, .tallas-toggle, .bag-overlay-btn, #product-modal, #fav-modal')) return;
+
+      const card = e.target.closest('.product-card');
+      if (!card) return;
+
+      showModalFromCard(card);
     });
   })();
 </script>
