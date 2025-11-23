@@ -232,6 +232,110 @@
   }
 </style>
 
+
+<style>
+  /* Filtros globales en Productos Destacados */
+  .filter-btn{
+    display: inline-flex !important;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.45rem 1rem;
+    border-radius: 9999px;
+    border: 1px solid #e5e7eb;
+    font-size: 0.9rem;
+    background: #f3f4f6;
+    cursor: pointer;
+    transition: background 0.15s ease, transform 0.1s ease;
+  }
+
+  .filter-btn:hover{
+    background:#e5e7eb;
+    transform: translateY(-1px);
+  }
+
+  .filters-panel{
+    display:none;
+    border:1px solid #e5e7eb;
+    border-radius:12px;
+    padding:1rem;
+    margin:.5rem 0 1rem;
+    background:#fafafa;
+  }
+
+  .filters-panel.show{
+    display:block !important;
+  }
+
+  .filters-group{
+    display:flex;
+    gap:1rem;
+    flex-wrap:wrap;
+  }
+
+  .filters-group > div{
+    min-width:180px;
+    flex:1 1 0;
+  }
+
+  .filters-panel label{
+    display:block;
+    font-size:0.8rem;
+    font-weight:600;
+    text-transform:uppercase;
+    letter-spacing:0.04em;
+    color:#4b5563;
+    margin-bottom:0.25rem;
+  }
+
+  .filters-panel select{
+    width:100%;
+    border-radius:0.5rem;
+    border:1px solid #d1d5db;
+    padding:0.45rem 0.65rem;
+    font-size:0.9rem;
+    background:#fff;
+  }
+
+  .filters-actions{
+    margin-top:0.75rem;
+    display:flex;
+    flex-wrap:wrap;
+    gap:0.75rem;
+  }
+
+  .filters-apply,
+  .filters-reset{
+    padding:0.55rem 1.1rem;
+    border-radius:9999px;
+    font-size:0.9rem;
+    font-weight:500;
+    cursor:pointer;
+    border:1px solid transparent;
+  }
+
+  .filters-apply{
+    background:#000;
+    color:#fff;
+    border-color:#000;
+  }
+
+  .filters-apply:hover{
+    transform: translateY(-1px);
+  }
+
+  .filters-reset{
+    background:#f3f4f6;
+    color:#374151;
+    border-color:#d1d5db;
+  }
+
+  .no-results{
+    padding:0.75rem 0.25rem;
+    font-size:0.9rem;
+    color:#6b7280;
+  }
+</style>
+
 </head>
 <body class="text-black h-full bg-white">
 <!-- Header -->
@@ -382,6 +486,64 @@
         Los favoritos de esta temporada
       </p>
     </div>
+    <!-- Toolbar de filtros -->
+    <div class="section-toolbar flex justify-end mb-4">
+      <button id="global-filter-toggle" type="button" class="filter-btn">
+        Filtros
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M3 4h18M6 10h12M10 16h4" />
+        </svg>
+      </button>
+    </div>
+
+    <!-- Panel de filtros -->
+    <div id="global-filters-panel" class="filters-panel">
+      <div class="filters-group">
+        <!-- Marca -->
+        <div>
+          <label for="filter-brand">Marca</label>
+          <select id="filter-brand">
+            <option value="">Todas</option>
+          </select>
+        </div>
+
+        <!-- Talla -->
+        <div>
+          <label for="filter-size">Talla</label>
+          <select id="filter-size">
+            <option value="">Todas</option>
+          </select>
+        </div>
+
+        <!-- Precio -->
+        <div>
+          <label for="filter-price">Precio</label>
+          <select id="filter-price">
+            <option value="">Todos</option>
+            <option value="0-500">Hasta $500</option>
+            <option value="500-650">$500 - $650</option>
+            <option value="650-700">$650 - $700</option>
+            <option value="700+">Más de $700</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="filters-actions">
+        <button id="apply-filters-btn" class="filters-apply" type="button">
+          Buscar
+        </button>
+        <button id="reset-filters-btn" class="filters-reset" type="button">
+          Limpiar filtros
+        </button>
+      </div>
+
+      <p id="filters-no-results" class="no-results hidden">
+        No encontramos tenis con esos filtros. Prueba cambiando los valores.
+      </p>
+    </div>
+
+    <!-- Grid de productos -->
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
       <div class="product-card nike-hover group cursor-pointer" data-brand="nike" data-gender="hombre">
                 <div class="relative overflow-hidden bg-gray-50 rounded-lg mb-4">
@@ -14808,6 +14970,23 @@
         .replace(/(^-|-$)+/g, '');                        // quitar guiones al inicio/fin
     }
 
+    // Asignar IDs únicos a todas las tarjetas de producto al cargar la página,
+    // para que los enlaces del tipo #product-... funcionen siempre.
+    document.addEventListener('DOMContentLoaded', function() {
+      const cards = document.querySelectorAll('.product-card');
+      cards.forEach(card => {
+        if (!card.id) {
+          const nameEl = card.querySelector('h3');
+          if (!nameEl) return;
+          const name = nameEl.textContent || '';
+          const slug = slugifyProductName(name);
+          if (slug) {
+            card.id = 'product-' + slug;
+          }
+        }
+      });
+    });
+
 sizeButtons.forEach(button => {
       button.addEventListener('click', function(event) {
         event.stopPropagation();
@@ -15003,25 +15182,24 @@ sizeButtons.forEach(button => {
           const productName = this.dataset.product;
           const productPrice = this.dataset.price;
           const selectedSize = this.dataset.size;
-          
-          // Buscar la tarjeta del producto y generar un link específico con ancla
+
+          // Buscar la tarjeta del producto y generar un link específico con #product-...
           const productCard = this.closest('.product-card');
           let productUrl = 'https://sneakers-zone.github.io/SneakerZone/';
-          
+
           if (productCard) {
-            // Si la tarjeta todavía no tiene ID, se lo generamos a partir del nombre
+            // Asegurar que la tarjeta tenga ID consistente con slugifyProductName
             if (!productCard.id) {
               const slug = slugifyProductName(productName || '');
               if (slug) {
                 productCard.id = 'product-' + slug;
               }
             }
-            // Si ya tiene ID, usamos ese ID como ancla
             if (productCard.id) {
               productUrl = productUrl + '#' + productCard.id;
             }
           }
-
+          
           // Crear mensaje de WhatsApp
           const message = `¡Hola! Me interesa este producto:
 
@@ -15035,7 +15213,7 @@ sizeButtons.forEach(button => {
           // Crear URL de WhatsApp
           const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
           
-          // Abrir WhatsApp en nueva pestaña
+          // Abrir WhatsApp en pestaña nueva
           window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
         });
       });
@@ -15451,7 +15629,7 @@ document.addEventListener('DOMContentLoaded', function() {
       return;
     }
 
-    // default: show home/products
+    // default: mostrar home/productos
     var home = document.getElementById('productos') || document.getElementById('hero') || document.querySelector('section');
     if(home){ home.classList.remove('hidden'); }
   }
@@ -15618,180 +15796,7 @@ document.addEventListener('DOMContentLoaded', function() {
 })();
    </script>
 <!-- Injected JS: fixed top-of-section brand bar + filters -->
-<script>
-    (function(){
-  var BRAND_LIST = ['Nike','Adidas','New Balance','Guess','Gucci','Tommy Hilfiger','Lacoste','Converse','Vans','Skechers','Prada','Chanel','Alo','Fila','Jordan','On','Reebok','Murphy','Pantunflas','Saint Laurent','Puma'];
-  var TARGET_SECTIONS = ['men-catalog','women-catalog','ninos-page','nuevos-lanzamientos-page','ofertas-page'];
 
-  function normalizeBrand(s){
-    s = (s||'').toLowerCase().trim();
-    var map = {'newbalance':'new balance','tommyhilfiger':'tommy hilfiger','tommi hilfier':'tommy hilfiger','guci':'gucci','van':'vans','vanz':'vans'};
-    return (map[s]||s);
-  }
-
-  function getPriceFromCard(card){
-    var p = card.querySelector('.font-medium.text-black');
-    if(!p) return null;
-    var m = (p.textContent||'').match(/([\d,.]+)/);
-    if(!m) return null;
-    return parseFloat(m[1].replace(/\./g,'').replace(',', '.'));
-  }
-
-  function cardHasSize(card, size){
-    if(!size) return true;
-    size = size.toString().trim();
-    var btns = card.querySelectorAll('.size-btn');
-    for(var i=0;i<btns.length;i++){
-      var s = (btns[i].getAttribute('data-size')||btns[i].textContent||'').trim();
-      if(s == size) return true;
-    }
-    return false;
-  }
-
-  function ensureToolbar(sectionId){
-    var sec = document.getElementById(sectionId);
-    if(!sec) return;
-    // If already exists directly under section, keep it
-    var exists = sec.querySelector(':scope > .section-toolbar');
-    if(exists) return;
-
-    var toolbar = document.createElement('div');
-    toolbar.className = 'section-toolbar';
-
-    var brandBar = document.createElement('div');
-    brandBar.className = 'brand-bar';
-    BRAND_LIST.forEach(function(lbl, idx){
-      var pill = document.createElement('button');
-      pill.type = 'button';
-      pill.className = 'brand-pill' + (idx===0?' active':'');
-      pill.setAttribute('data-brand-filter', lbl.toLowerCase());
-      pill.textContent = lbl;
-      brandBar.appendChild(pill);
-    });
-
-    var filterBtn = document.createElement('button');
-    filterBtn.type = 'button';
-    filterBtn.className = 'filter-btn';
-    filterBtn.textContent = 'Filtros';
-
-    var panel = document.createElement('div');
-    panel.className = 'filters-panel';
-    var panelId = 'filters-panel-' + sectionId;
-    panel.id = panelId;
-    panel.innerHTML = ''
-      + '<div class="filters-group">'
-      +   '<div>'
-      +     '<label>Precio mínimo</label><br/>'
-      +     '<input type="number" step="0.01" id="'+panelId+'-min" placeholder="0" style="border:1px solid #e5e7eb;border-radius:8px;padding:.4rem;width:160px">'
-      +   '</div>'
-      +   '<div>'
-      +     '<label>Precio máximo</label><br/>'
-      +     '<input type="number" step="0.01" id="'+panelId+'-max" placeholder="99999" style="border:1px solid #e5e7eb;border-radius:8px;padding:.4rem;width:160px">'
-      +   '</div>'
-      +   '<div>'
-      +     '<label>Tallas</label><br/>'
-      +     '<input type="text" id="'+panelId+'-sizes" placeholder="Ej: 25, 26.5, 7" style="border:1px solid #e5e7eb;border-radius:8px;padding:.4rem;width:220px">'
-      +   '</div>'
-      +   '<div>'
-      +     '<label>Marca</label><br/>'
-      +     '<select id="'+panelId+'-brand" style="border:1px solid #e5e7eb;border-radius:8px;padding:.45rem;width:200px">'
-      +       '<option value="">Todas</option>'
-      +       + BRAND_LIST.map(function(b){ return '<option value="'+b.toLowerCase()+'">'+b+'</option>'; }).join('')
-      +     '</select>'
-      +   '</div>'
-      + '</div>'
-      + '<button class="filters-apply" id="'+panelId+'-apply">Aplicar filtros</button>';
-
-    toolbar.appendChild(brandBar);
-    toolbar.appendChild(filterBtn);
-
-    // Insert toolbar after section's main title if present (just under any heading)
-    if(sec.firstChild){
-      
-var h2 = sec.querySelector('h2');
-if (h2 && h2.nextSibling) {
-  sec.insertBefore(toolbar, h2.nextSibling);
-  sec.insertBefore(panel, toolbar.nextSibling);
-} else {
-  sec.insertBefore(toolbar, sec.firstElementChild);
-  sec.insertBefore(panel, toolbar.nextSibling);
-}
-
-      sec.insertBefore(panel, toolbar.nextSibling);
-    } else {
-      sec.appendChild(toolbar);
-      sec.appendChild(panel);
-    }
-
-    filterBtn.addEventListener('click', function(){
-      panel.classList.toggle('show');
-    });
-
-    // Brand pill filtering (within section)
-    brandBar.addEventListener('click', function(e){
-      if(!(e.target && e.target.matches('.brand-pill'))) return;
-      brandBar.querySelectorAll('.brand-pill').forEach(function(p){ p.classList.remove('active'); });
-      e.target.classList.add('active');
-      var target = (e.target.getAttribute('data-brand-filter')||'').toLowerCase();
-      applyFilters(sectionId, { brand: target });
-    });
-
-    // Apply button filters
-    document.getElementById(panelId+'-apply').addEventListener('click', function(){
-      var min = parseFloat(document.getElementById(panelId+'-min').value || '0');
-      var maxVal = document.getElementById(panelId+'-max').value;
-      var max = maxVal ? parseFloat(maxVal) : Number.POSITIVE_INFINITY;
-      var sizesStr = document.getElementById(panelId+'-sizes').value || '';
-      var sizes = sizesStr.split(',').map(function(s){ return s.trim(); }).filter(Boolean);
-      var brand = (document.getElementById(panelId+'-brand').value || '').toLowerCase();
-      applyFilters(sectionId, { min:min, max:max, sizes:sizes, brand:brand });
-    });
-  }
-
-  function applyFilters(sectionId, opts){
-    var sec = document.getElementById(sectionId);
-    if(!sec) return;
-    opts = opts || {};
-    var cards = sec.querySelectorAll('.grid .product-card');
-    var shown = 0;
-    cards.forEach(function(card){
-      var br = normalizeBrand(card.getAttribute('data-brand')||'');
-      var price = getPriceFromCard(card);
-      var ok = true;
-
-      if(opts.brand && opts.brand !== '' && normalizeBrand(opts.brand) !== br){ ok = false; }
-      if(typeof opts.min === 'number' && price !== null && price < opts.min) ok = false;
-      if(typeof opts.max === 'number' && price !== null && price > opts.max) ok = false;
-      if(opts.sizes && opts.sizes.length){
-        var any = false;
-        for(var i=0;i<opts.sizes.length;i++){
-          if(cardHasSize(card, opts.sizes[i])){ any = true; break; }
-        }
-        if(!any) ok = false;
-      }
-      card.style.display = ok ? '' : 'none';
-      if(ok) shown++;
-    });
-
-    var empty = sec.querySelector('.no-results');
-    if(!empty){
-      empty = document.createElement('div');
-      empty.className = 'no-results';
-      empty.textContent = 'No hay productos que coincidan con el filtro.';
-      sec.appendChild(empty);
-    }
-    empty.style.display = shown ? 'none' : '';
-  }
-
-  function ensureAllToolbars(){
-    TARGET_SECTIONS.forEach(function(id){ try{ ensureToolbar(id); }catch(_){ } });
-  }
-
-  document.addEventListener('DOMContentLoaded', ensureAllToolbars);
-  window.addEventListener('hashchange', ensureAllToolbars);
-  window.ensureToolbar = ensureToolbar;
-})();
-   </script>
 <!-- Injected cleanup + precise placement -->
 <script>
     (function(){
@@ -15908,21 +15913,18 @@ if (h2 && h2.nextSibling) {
       var filterBtn = document.createElement('button');
       filterBtn.type = 'button';
       filterBtn.className = 'filter-btn';
-      filterBtn.textContent = 'Filtros';
-
-      var panel = document.createElement('div');
-      panel.className = 'filters-panel';
-      panel.innerHTML = '<div style="color:#6b7280">Usa el panel de filtros añadido más abajo en esta misma sección.</div>';
+      filterBtn.innerHTML = [
+        '  Filtros',
+        '  <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">',
+        '    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4h18M6 10h12M10 16h4"></path>',
+        '  </svg>'
+      ].join('');
 
       toolbar.appendChild(brandBar);
       toolbar.appendChild(filterBtn);
-      // default: hidden panel (your existing full panel remains lower in DOM if present)
-      filterBtn.addEventListener('click', function(){
-        // Try to open the main panel for this section if exists
-        var realPanel = sec.querySelector('.filters-panel');
-        if(realPanel) realPanel.classList.toggle('show');
-      });
     }
+
+
 
     // Place toolbar right AFTER subtitle <p> that follows h2
     var subtitle = null;
@@ -15996,174 +15998,7 @@ if (h2 && h2.nextSibling) {
 })();
    </script>
 <!-- Injected: 'Todos' brand button + working Filters panel per section -->
-<script>
-    (function(){
-  var BRAND_LIST = ['Todos','Nike','Adidas','New Balance','Guess','Gucci','Tommy Hilfiger','Lacoste','Converse','Vans','Skechers','Prada','Chanel','Alo','Fila','Jordan','On','Reebok','Murphy','Pantunflas','Saint Laurent','Puma'];
-  var TARGET_SECTIONS = ['men-catalog','women-catalog','ninos-page','nuevos-lanzamientos-page','ofertas-page'];
 
-  function normalizeBrand(s){
-    s = (s||'').toLowerCase().trim();
-    var map = {'newbalance':'new balance','tommyhilfiger':'tommy hilfiger','tommi hilfier':'tommy hilfiger','guci':'gucci','van':'vans','vanz':'vans'};
-    return (map[s]||s);
-  }
-
-  function getPriceFromCard(card){
-    var p = card.querySelector('.font-medium.text-black');
-    if(!p) return null;
-    var m = (p.textContent||'').match(/([\d,.]+)/);
-    if(!m) return null;
-    return parseFloat(m[1].replace(/\./g,'').replace(',', '.'));
-  }
-
-  function cardHasSize(card, size){
-    if(!size) return true;
-    size = size.toString().trim();
-    var btns = card.querySelectorAll('.size-btn');
-    for(var i=0;i<btns.length;i++){
-      var s = (btns[i].getAttribute('data-size')||btns[i].textContent||'').trim();
-      if(s == size) return true;
-    }
-    return false;
-  }
-
-  function headerBoxOf(sec){
-    var h2 = sec.querySelector('h2');
-    return h2 ? (h2.closest('.text-center') || h2.parentElement) : sec;
-  }
-
-  function buildPanel(sectionId){
-    var panel = document.createElement('div');
-    panel.className = 'filters-panel';
-    var pid = 'filters-panel-' + sectionId;
-    panel.id = pid;
-    panel.innerHTML = ''
-      + '<div class="filters-group">'
-      +   '<div><label>Precio mínimo</label><br/>'
-      +     '<input type="number" step="0.01" id="'+pid+'-min" placeholder="0" style="border:1px solid #e5e7eb;border-radius:8px;padding:.4rem;width:160px"></div>'
-      +   '<div><label>Precio máximo</label><br/>'
-      +     '<input type="number" step="0.01" id="'+pid+'-max" placeholder="99999" style="border:1px solid #e5e7eb;border-radius:8px;padding:.4rem;width:160px"></div>'
-      +   '<div><label>Tallas</label><br/>'
-      +     '<input type="text" id="'+pid+'-sizes" placeholder="Ej: 25, 26.5, 7" style="border:1px solid #e5e7eb;border-radius:8px;padding:.4rem;width:220px"></div>'
-      +   '<div><label>Marca</label><br/>'
-      +     '<select id="'+pid+'-brand" style="border:1px solid #e5e7eb;border-radius:8px;padding:.45rem;width:200px">'
-      +       BRAND_LIST.map(function(b){ return '<option value="'+b.toLowerCase()+'">'+b+'</option>'; }).join('')
-      +     + '</select></div>'
-      + '</div>'
-      + '<button class="filters-apply" id="'+pid+'-apply">Aplicar filtros</button>';
-    return panel;
-  }
-
-  function applyFilters(sectionId, opts){
-    var sec = document.getElementById(sectionId);
-    if(!sec) return;
-    opts = opts || {};
-    var cards = sec.querySelectorAll('.grid .product-card');
-    var shown = 0;
-    cards.forEach(function(card){
-      var br = normalizeBrand(card.getAttribute('data-brand')||'');
-      var price = getPriceFromCard(card);
-      var ok = true;
-
-      // brand: 'todos' or '' means no brand filter
-      if(opts.brand && opts.brand !== 'todos' && normalizeBrand(opts.brand) !== br){ ok = false; }
-      if(typeof opts.min === 'number' && price !== null && price < opts.min) ok = false;
-      if(typeof opts.max === 'number' && price !== null && price > opts.max) ok = false;
-      if(opts.sizes && opts.sizes.length){
-        var any = false;
-        for(var i=0;i<opts.sizes.length;i++){
-          if(cardHasSize(card, opts.sizes[i])){ any = true; break; }
-        }
-        if(!any) ok = false;
-      }
-      card.style.display = ok ? '' : 'none';
-      if(ok) shown++;
-    });
-
-    var empty = sec.querySelector('.no-results');
-    if(!empty){
-      empty = document.createElement('div');
-      empty.className = 'no-results';
-      empty.textContent = 'No hay productos que coincidan con el filtro.';
-      sec.appendChild(empty);
-    }
-    empty.style.display = shown ? 'none' : '';
-  }
-
-  function rebuildHeaderToolbar(sectionId){
-    var sec = document.getElementById(sectionId);
-    if(!sec) return;
-    var header = headerBoxOf(sec);
-
-    // Remove any toolbars not in header
-    sec.querySelectorAll('.section-toolbar').forEach(function(tb){
-      if(!header.contains(tb)) tb.remove();
-    });
-
-    // Ensure toolbar in header
-    var toolbar = header.querySelector(':scope > .section-toolbar');
-    if(!toolbar){
-      toolbar = document.createElement('div');
-      toolbar.className = 'section-toolbar';
-      header.appendChild(toolbar);
-    } else {
-      toolbar.innerHTML = ''; // reset to avoid duplicates
-    }
-
-    // Build brand bar with 'Todos'
-    var brandBar = document.createElement('div');
-    brandBar.className = 'brand-bar';
-    BRAND_LIST.forEach(function(lbl, idx){
-      var pill = document.createElement('button');
-      pill.type = 'button';
-      pill.className = 'brand-pill' + (idx===0?' active':'');
-      pill.setAttribute('data-brand-filter', lbl.toLowerCase());
-      pill.textContent = lbl;
-      brandBar.appendChild(pill);
-    });
-
-    // Build filter btn + panel
-    var filterBtn = document.createElement('button');
-    filterBtn.type = 'button';
-    filterBtn.className = 'filter-btn';
-    filterBtn.textContent = 'Filtros';
-    var panel = buildPanel(sectionId);
-
-    toolbar.appendChild(brandBar);
-    toolbar.appendChild(filterBtn);
-    // place panel right after toolbar in header
-    header.insertBefore(panel, toolbar.nextSibling);
-
-    // Wiring
-    filterBtn.addEventListener('click', function(){ panel.classList.toggle('show'); });
-    brandBar.addEventListener('click', function(e){
-      if(!(e.target && e.target.matches('.brand-pill'))) return;
-      brandBar.querySelectorAll('.brand-pill').forEach(function(p){ p.classList.remove('active'); });
-      e.target.classList.add('active');
-      var target = (e.target.getAttribute('data-brand-filter')||'').toLowerCase();
-      applyFilters(sectionId, { brand: target });
-    });
-
-    var pid = panel.id;
-    panel.querySelector('#'+pid+'-apply').addEventListener('click', function(){
-      var min = parseFloat((panel.querySelector('#'+pid+'-min').value||'0'));
-      var maxVal = panel.querySelector('#'+pid+'-max').value;
-      var max = maxVal ? parseFloat(maxVal) : Number.POSITIVE_INFINITY;
-      var sizesStr = panel.querySelector('#'+pid+'-sizes').value || '';
-      var sizes = sizesStr.split(',').map(function(s){ return s.trim(); }).filter(Boolean);
-      var brand = (panel.querySelector('#'+pid+'-brand').value||'').toLowerCase();
-      applyFilters(sectionId, { min:min, max:max, sizes:sizes, brand:brand });
-    });
-  }
-
-  function run(){
-    TARGET_SECTIONS.forEach(rebuildHeaderToolbar);
-  }
-  document.addEventListener('DOMContentLoaded', run);
-  window.addEventListener('hashchange', run);
-  setTimeout(run, 400);
-  setTimeout(run, 1000);
-})();
-   </script>
 <script>
     /* ====== FAVORITOS con BOLSITA en cards + Modal con acceso a página ====== */
 (function(){
@@ -17148,6 +16983,221 @@ if (h2 && h2.nextSibling) {
     });
   })();
 </script>
+
+
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  // Secciones donde aplicarán filtros
+  const SECTION_IDS = ['productos', 'nuevos-lanzamientos-page', 'men-catalog', 'women-catalog', 'ninos-page', 'ofertas-page'];
+
+  function getPriceFromCard(card) {
+    const priceEl = card.querySelector('.font-medium.text-black');
+    if (!priceEl) return null;
+    const text = (priceEl.textContent || '').replace(/\s/g, '');
+    const match = text.match(/\$?(\d+(\.\d+)?)/);
+    return match ? parseFloat(match[1]) : null;
+  }
+
+  function cardHasSize(card, size) {
+    if (!size) return true;
+    return !!card.querySelector('.size-btn[data-size="' + size + '"]');
+  }
+
+  function matchesPrice(price, range) {
+    if (!range || price == null) return true;
+    if (range === '0-500')   return price <= 500;
+    if (range === '500-650') return price >= 500 && price <= 650;
+    if (range === '650-700') return price > 650 && price <= 700;
+    if (range === '700+')    return price >= 700;
+    return true;
+  }
+
+  function initSectionFilters(sectionId) {
+    const section = document.getElementById(sectionId);
+    if (!section) return;
+
+    const products = Array.from(section.querySelectorAll('.product-card'));
+    if (products.length === 0) return;
+
+    // Buscar grid principal de productos dentro de la sección
+    const grid = section.querySelector('.grid');
+    if (!grid) return;
+
+    // Reutilizar toolbar/panel existentes si los hay (por ejemplo en Productos Destacados)
+    let toolbar = section.querySelector('.section-toolbar');
+    let panel   = section.querySelector('.filters-panel');
+
+    if (!toolbar) {
+      toolbar = document.createElement('div');
+      toolbar.className = 'section-toolbar flex justify-end mb-4';
+      toolbar.innerHTML = [
+        '<button type="button" class="filter-btn">',
+        '  Filtros',
+        '  <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">',
+        '    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4h18M6 10h12M10 16h4" />',
+        '  </svg>',
+        '</button>'
+      ].join('');
+      grid.parentNode.insertBefore(toolbar, grid);
+    }
+
+    if (!panel) {
+      panel = document.createElement('div');
+      panel.className = 'filters-panel';
+      panel.innerHTML = [
+        '<div class="filters-group">',
+        '  <div>',
+        '    <label>Marca</label>',
+        '    <select data-filter="brand">',
+        '      <option value="">Todas</option>',
+        '    </select>',
+        '  </div>',
+        '  <div>',
+        '    <label>Talla</label>',
+        '    <select data-filter="size">',
+        '      <option value="">Todas</option>',
+        '    </select>',
+        '  </div>',
+        '  <div>',
+        '    <label>Precio</label>',
+        '    <select data-filter="price">',
+        '      <option value="">Todos</option>',
+        '      <option value="0-500">Hasta $500</option>',
+        '      <option value="500-650">$500 - $650</option>',
+        '      <option value="650-700">$650 - $700</option>',
+        '      <option value="700+">Más de $700</option>',
+        '    </select>',
+        '  </div>',
+        '</div>',
+        '<div class="filters-actions">',
+        '  <button type="button" class="filters-apply" data-filter-action="apply">Buscar</button>',
+        '  <button type="button" class="filters-reset" data-filter-action="reset">Limpiar filtros</button>',
+        '</div>',
+        '<p class="no-results hidden">No encontramos tenis con esos filtros. Prueba cambiando los valores.</p>'
+      ].join('');
+      grid.parentNode.insertBefore(panel, grid);
+    }
+
+    // Buscar los elementos dentro del panel (ya sea creado o existente)
+    const toggleBtn   = toolbar.querySelector('.filter-btn');
+    const selectBrand = panel.querySelector('select[data-filter="brand"]') || panel.querySelector('#filter-brand');
+    const selectSize  = panel.querySelector('select[data-filter="size"]')  || panel.querySelector('#filter-size');
+    const selectPrice = panel.querySelector('select[data-filter="price"]') || panel.querySelector('#filter-price');
+    const applyBtn    = panel.querySelector('[data-filter-action="apply"]') || panel.querySelector('#apply-filters-btn');
+    const resetBtn    = panel.querySelector('[data-filter-action="reset"]') || panel.querySelector('#reset-filters-btn');
+    const noResults   = panel.querySelector('.no-results') || panel.querySelector('#filters-no-results');
+
+    if (!toggleBtn || !panel) return;
+
+    // Construir listas únicas de marcas y tallas por sección
+    const brandsSet = new Set();
+    const sizesSet  = new Set();
+
+    products.forEach(card => {
+      const brand = (card.dataset.brand || '').toLowerCase();
+      if (brand) brandsSet.add(brand);
+
+      card.querySelectorAll('.size-btn[data-size]').forEach(btn => {
+        const s = btn.getAttribute('data-size');
+        if (s) sizesSet.add(s);
+      });
+    });
+
+    if (selectBrand && selectBrand.options.length <= 1) {
+      Array.from(brandsSet).sort().forEach(brand => {
+        const opt = document.createElement('option');
+        opt.value = brand;
+        opt.textContent = brand.charAt(0).toUpperCase() + brand.slice(1);
+        selectBrand.appendChild(opt);
+      });
+    }
+
+    if (selectSize && selectSize.options.length <= 1) {
+      Array.from(sizesSet)
+        .sort((a, b) => parseFloat(a) - parseFloat(b))
+        .forEach(size => {
+          const opt = document.createElement('option');
+          opt.value = size;
+          opt.textContent = size;
+          selectSize.appendChild(opt);
+        });
+    }
+
+    // Mostrar/ocultar panel al presionar Filtros
+    toggleBtn.addEventListener('click', function () {
+      panel.classList.toggle('show');
+    });
+
+    function applyFilters() {
+      const brandVal = selectBrand ? selectBrand.value.toLowerCase() : '';
+      const sizeVal  = selectSize ? selectSize.value : '';
+      const priceVal = selectPrice ? selectPrice.value : '';
+
+      let visibleCount = 0;
+
+      products.forEach(card => {
+        let show = true;
+
+        const cardBrand = (card.dataset.brand || '').toLowerCase();
+        const cardPrice = getPriceFromCard(card);
+
+        if (brandVal && cardBrand !== brandVal) {
+          show = false;
+        }
+
+        if (show && !cardHasSize(card, sizeVal)) {
+          show = false;
+        }
+
+        if (show && !matchesPrice(cardPrice, priceVal)) {
+          show = false;
+        }
+
+        if (show) {
+          card.classList.remove('hidden');
+          visibleCount++;
+        } else {
+          card.classList.add('hidden');
+        }
+      });
+
+      if (noResults) {
+        if (visibleCount === 0) {
+          noResults.classList.remove('hidden');
+        } else {
+          noResults.classList.add('hidden');
+        }
+      }
+    }
+
+    if (applyBtn) {
+      applyBtn.addEventListener('click', function (e) {
+        e.preventDefault();
+        applyFilters();
+      });
+    }
+
+    if (resetBtn) {
+      resetBtn.addEventListener('click', function (e) {
+        e.preventDefault();
+        if (selectBrand) selectBrand.value = '';
+        if (selectSize)  selectSize.value  = '';
+        if (selectPrice) selectPrice.value = '';
+
+        products.forEach(card => {
+          card.classList.remove('hidden');
+        });
+
+        if (noResults) noResults.classList.add('hidden');
+      });
+    }
+  }
+
+  SECTION_IDS.forEach(initSectionFilters);
+});
+</script>
+
 
 </body>
 </html>
