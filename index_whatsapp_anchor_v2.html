@@ -14808,7 +14808,86 @@
         .replace(/(^-|-$)+/g, '');                        // quitar guiones al inicio/fin
     }
 
-// Cart counter functionality (keeping original)
+sizeButtons.forEach(button => {
+      button.addEventListener('click', function(event) {
+        event.stopPropagation();
+        
+        // Remove selection from other sizes in the same product
+        const productCard = this.closest('.product-card');
+        const otherSizes = productCard.querySelectorAll('.size-btn');
+        otherSizes.forEach(btn => {
+          btn.classList.remove('bg-black', 'text-white');
+          btn.classList.add('border-gray-300');
+        });
+        
+        // Select this size
+        this.classList.add('bg-black', 'text-white');
+        this.classList.remove('border-gray-300');
+        
+        // Enable WhatsApp button
+        const whatsappBtn = productCard.querySelector('.whatsapp-btn');
+        whatsappBtn.disabled = false;
+        whatsappBtn.classList.remove('opacity-50');
+        
+        // Store selected data
+        const productName = productCard.querySelector('h3').textContent;
+        const productPrice = productCard.querySelector('p:last-of-type').textContent;
+        const selectedSize = this.dataset.size;
+        
+        whatsappBtn.dataset.product = productName;
+        whatsappBtn.dataset.price = productPrice;
+        whatsappBtn.dataset.size = selectedSize;
+      });
+    });
+    
+    // WhatsApp functionality
+    whatsappButtons.forEach(button => {
+      button.addEventListener('click', function(event) {
+        event.stopPropagation();
+
+        if (this.disabled) return;
+
+        const productName = this.dataset.product;
+        const productPrice = this.dataset.price;
+        const selectedSize = this.dataset.size;
+
+        // Buscar la tarjeta del producto y generar un link específico
+        const productCard = this.closest('.product-card');
+        let productUrl = 'https://sneakers-zone.github.io/SneakerZone/';
+
+        if (productCard) {
+          // Si la tarjeta todavía no tiene ID, se lo generamos a partir del nombre
+          if (!productCard.id) {
+            const slug = slugifyProductName(productName || '');
+            if (slug) {
+              productCard.id = 'product-' + slug;
+            }
+          }
+          // Si ya tiene ID, usamos ese ID como ancla
+          if (productCard.id) {
+            productUrl = productUrl + '#' + productCard.id;
+          }
+        }
+
+        // Crear mensaje de WhatsApp
+        const message = `¡Hola! Me interesa este producto:
+
+🔥 *${productName}*
+💰 Precio: ${productPrice}
+👟 Talla: ${selectedSize}
+🌐 Link: ${productUrl}
+
+¿Podrías darme más información?`;
+
+        // Crear URL de WhatsApp
+        const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+
+        // Abrir WhatsApp en una nueva pestaña
+        window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
+      });
+    });
+
+    // Cart counter functionality (keeping original)
     let cartCount = 0;
     const cartCounter = document.getElementById('cart-counter');
 
@@ -15350,32 +15429,32 @@ document.addEventListener('DOMContentLoaded', function() {
     show(id);
   }
   function routeFromHash(){
-     var h = (location.hash || '').replace(/^#/, '');
-     if(h === 'men' || h === 'men-catalog') return routeTo('men-catalog');
-     if(h === 'women' || h === 'women-catalog') return routeTo('women-catalog');
-     if(h === 'kids' || h === 'ninos' || h === 'niños' || h === 'ninos-page') return routeTo('ninos-page');
+    var h = (location.hash || '').replace(/^#/, '');
+    if(h === 'men' || h === 'men-catalog') return routeTo('men-catalog');
+    if(h === 'women' || h === 'women-catalog') return routeTo('women-catalog');
+    if(h === 'kids' || h === 'ninos' || h === 'niños' || h === 'ninos-page') return routeTo('ninos-page');
 
-     // Si el hash apunta a un producto específico (#product-...)
-     if (h && h.indexOf('product-') === 0) {
-       var target = document.getElementById(h);
-       if (target) {
-         var sec = target.closest('section');
-         if (sec && sec.id) {
-           try { ensureBrandBar(sec.id); } catch(_) {}
-           hideAllSections();
-           sec.classList.remove('hidden');
-         }
-         setTimeout(function(){
-           try { target.scrollIntoView({behavior:'smooth', block:'center'}); } catch(_){}
-         }, 80);
-       }
-       return;
-     }
+    // Si el hash apunta a un producto específico (#product-...)
+    if (h && h.indexOf('product-') === 0) {
+      var target = document.getElementById(h);
+      if (target) {
+        var sec = target.closest('section');
+        if (sec && sec.id) {
+          try { ensureBrandBar(sec.id); } catch(_) {}
+          hideAllSections();
+          sec.classList.remove('hidden');
+        }
+        setTimeout(function(){
+          try { target.scrollIntoView({behavior:'smooth', block:'center'}); } catch(_){}
+        }, 80);
+      }
+      return;
+    }
 
-     // default: mostrar home/productos
-     var home = document.getElementById('productos') || document.getElementById('hero') || document.querySelector('section');
-     if(home){ home.classList.remove('hidden'); }
-   }
+    // default: show home/products
+    var home = document.getElementById('productos') || document.getElementById('hero') || document.querySelector('section');
+    if(home){ home.classList.remove('hidden'); }
+  }
   window.addEventListener('hashchange', routeFromHash);
   document.addEventListener('DOMContentLoaded', routeFromHash);
 
