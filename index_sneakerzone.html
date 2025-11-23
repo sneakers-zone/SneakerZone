@@ -5,7 +5,7 @@
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>
-   SneakerZone - Just Do It
+   SneakerZone - Tu zona de estilo
   </title>
 <link href="https://fonts.googleapis.com/css2?family=Helvetica+Neue:wght@300;400;500;700;900&amp;display=swap" rel="stylesheet"/>
 <script src="https://cdn.tailwindcss.com">
@@ -106,9 +106,10 @@
   .no-results{padding:1rem;color:#6b7280}
   </style>
 <style>
-   /* Remove legacy brand bars that are not first toolbars */
-  .grid .brand-bar,
-  .products .brand-bar {
+   /* Ocultar barras y botones de marcas en TODAS las secciones */
+  .brand-bar,
+  .brand-pill,
+  .brand-status {
     display: none !important;
   }
   </style>
@@ -344,14 +345,17 @@
 <div class="flex justify-between items-center h-16">
 <!-- Logo -->
 <div class="flex items-center">
-<div class="text-2xl font-black tracking-tight cursor-pointer" onclick="showHomePage()">
-<span class="text-black">
-        SNEAKER
-       </span>
-<span class="text-blue-600">
-        ZONE
-       </span>
-</div>
+  <div class="flex items-center gap-2 cursor-pointer" onclick="showHomePage()">
+    <img
+      src="assets/Img/Brand/sneakerzone-logo.png"
+      alt="Logo SneakerZone"
+      class="h-10 w-auto hidden sm:block"
+    />
+    <div class="text-2xl font-black tracking-tight">
+      <span class="text-black">SNEAKER</span>
+      <span class="text-blue-600">ZONE</span>
+    </div>
+  </div>
 </div>
 <!-- Navigation -->
 <nav class="hidden md:flex space-x-8">
@@ -459,20 +463,39 @@
 </div>
 
 <!-- Hero Section -->
-<section class="relative bg-gray-50 overflow-hidden">
-<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 lg:py-32">
-<div class="text-center">
-<h1 class="hero-text text-6xl lg:text-8xl text-black mb-6">
-       JUST DO IT
-      </h1>
-<p class="text-lg lg:text-xl text-gray-600 mb-8 max-w-2xl mx-auto font-light">
-       Encuentra tu grandeza con la nueva colección de tenis premium. Diseñados para el rendimiento, creados para el estilo.
-      </p>
-<div class="flex flex-col sm:flex-row gap-4 justify-center">
+<section class="relative bg-gray-900 overflow-hidden">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24">
+    <div class="grid lg:grid-cols-2 gap-10 items-center">
+      <!-- Texto -->
+      <div class="text-center lg:text-left">
+        <p class="text-sm tracking-[0.35em] text-blue-400 uppercase mb-3">
+          SneakerZone
+        </p>
+        <h1 class="hero-text text-4xl sm:text-5xl lg:text-6xl text-white mb-4">
+          Tu zona de estilo.
+        </h1>
+        <p class="text-base sm:text-lg text-gray-300 mb-6 max-w-xl mx-auto lg:mx-0">
+          Tenis con el estilo que buscas, a precios que sí se pueden. Encuentra tu siguiente par favorito en nuestra zona de estilo.
+        </p>
+        <button
+          type="button"
+          onclick="document.getElementById('productos').scrollIntoView({ behavior: 'smooth' });"
+          class="nike-button inline-flex items-center px-6 py-3 bg-white text-black rounded-full text-sm font-medium shadow-md hover:shadow-lg"
+        >
+          Ver productos
+        </button>
+      </div>
 
-</div>
-</div>
-</div>
+      <!-- Imagen de portada -->
+      <div class="relative">
+        <img
+          src="assets/Img/Brand/sneakerzone-portada.png"
+          alt="SneakerZone - Tu zona de estilo"
+          class="w-full rounded-3xl shadow-2xl border border-gray-800"
+        />
+      </div>
+    </div>
+  </div>
 </section>
 <!-- Featured Products -->
 <!-- Featured Products -->
